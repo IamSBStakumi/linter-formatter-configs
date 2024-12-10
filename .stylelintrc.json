@@ -1,0 +1,15 @@
+{
+  "overrides": [
+    {
+      "extends": ["stylelint-config-standard", "stylelint-config-recess-order"],
+      "plugins": ["stylelint-order"],
+      "customSyntax": "postcss-styled-syntax",
+      "ignoreFiles": ["node_modules"],
+      "files": ["**/*.{js,jsx,ts,tsx}"],
+      "rules": {
+        "function-name-case": null,
+        "value-keyword-case": null
+      }
+    }
+  ]
+}
