@@ -1,3 +1,59 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "airbnb-typescript",
+    "next/core-web-vitals",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "no-alert": "error",
+    "no-console": ["warn", { "allow": ["error"] }], // console.error以外のconsole呼び出しについて警告を出す
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }], // ループ処理の単項演算子は許可する
+    // return文の前に1行空ける
+    "padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "return"
+      }
+    ],
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }], // _idを除いて先頭または末尾にアンダースコアがついた変数・プロパティを許可しない
+    "camelcase": ["error", { "properties": "always" }], // 定数を除いて、変数名やプロパティ名にキャメルケースを使うように強制する
+    // 配列の要素やオブジェクトのプロパティを変数に割当てるときに分割代入を使用するように強制する
+    "prefer-destructuring": [
+      "error",
+      {
+        // 変数代入時
+        "AssignmentExpression": {
+          "array": false // 分割代入を使用しなくても良い
+        }
+      }
+    ],
+    "no-use-before-define": "off", // tsxファイルで import React from "react" と記述したときに誤作動するのでオフ
+    "@typescript-eslint/no-use-before-define": "error", // 上記と同じ理由でオフ
+    // void演算子の式としての使用を禁止する
+    "no-void": [
+      "error",
+      {
+        "allowAsStatement": true // @typescript-eslint/no-floating-promises ルールを回避するため文としての使用を許可する
+      }
+    ],
+    "@typescript-eslint/lines-between-class-members": "off",
+    "@typescript-eslint/no-throw-literal": "off",
+    "@typescript-eslint/only-throw-error": "error",
+    // jsx,tsxファイル以外ではjsx構文を許可しない
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [".jsx", ".tsx"]
+      }
+    ]
+  }
 }
