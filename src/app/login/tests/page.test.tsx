@@ -3,7 +3,9 @@ import { render, screen } from "@testing-library/react";
 import Login from "../page";
 
 describe("ログインコンポーネントのテスト", () => {
-  render(<Login />);
+  test("Hello, Worldがあるか", () => {
+    render(<Login />);
 
-  expect(screen.getByLabelText("hello, world"));
+    expect(screen.getByText("Hello, World"));
+  });
 });
