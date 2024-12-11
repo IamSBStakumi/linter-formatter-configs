@@ -29,11 +29,11 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export default function StyledComponentsRegistry({
+const StyledComponentsRegistry = ({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}) => {
   const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet());
 
   useServerInsertedHTML(() => {
@@ -51,4 +51,6 @@ export default function StyledComponentsRegistry({
       {children}
     </StyleSheetManager>
   );
-}
+};
+
+export default StyledComponentsRegistry;
