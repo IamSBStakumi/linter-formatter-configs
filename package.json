@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "jest",
+    "test:w": "jest --watch",
     "lint": "next lint",
     "prepare": "husky"
   },
@@ -24,7 +26,6 @@
     "@types/styled-components": "^5.1.34",
     "@typescript-eslint/eslint-plugin": "^8.16.0",
     "@typescript-eslint/parser": "^8.16.0",
-    "add": "^2.0.6",
     "eslint": "^8",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
@@ -43,8 +44,7 @@
     "stylelint-config-recess-order": "^5.1.1",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-order": "^6.0.4",
-    "typescript": "^5",
-    "yarn": "^1.22.22"
+    "typescript": "^5"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
