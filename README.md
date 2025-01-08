@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Auth-Test
 
-## Getting Started
+## やったこと
 
-First, run the development server:
+### Google Cloudの機能を有効化
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Cloud build
+- Artifact Registry
+- Cloud Resource Manager API
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 権限の見直し
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [gcloud builds submit で "The user is forbidden from accessing the bucket..." エラー](https://zenn.dev/nbstsh/scraps/fdda1240d41fa8)を参考にサービスアカウントの権限を管理
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- cloud build設定ページから、Cloud Run管理者ロールを`ENABLED`に設定
 
-## Learn More
+  - ポップアップは[スキップ]をクリック
 
-To learn more about Next.js, take a look at the following resources:
+- 秘密鍵を発行したサービスアカウントに`サービスアカウントユーザー`ロールを付与
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### レポジトリの作成
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Cloud Build実行時に、`staging-repo`が無いというエラーが発生したため、Artifact Registryにおいてレポジトリを作成した
 
-## Deploy on Vercel
+  - 名前とリージョンのみ設定。残りは初期状態のまま
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 現在の設定の懸念
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Cloud Storageにアップロードしたソースを使用してビルドしている -> Cloud Storageの容量を使用する
+- Artifact Registryにビルドした古いイメージが残ったままになる
+
+上記を放置すると、料金が高くなる。
