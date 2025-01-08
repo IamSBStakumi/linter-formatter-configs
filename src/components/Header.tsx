@@ -101,8 +101,12 @@ const Header = ({ session }: { session: Session | null }) => {
   const [isUserMenuDisplayed, setIsUserMenuDisplayed] = useState(false);
 
   const handleLogout = async () => {
-    await NextAuthSignOut();
-    await signOut(firebaseAuth);
+    try {
+      await signOut(firebaseAuth);
+      await NextAuthSignOut({ redirectTo: "/login" });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
