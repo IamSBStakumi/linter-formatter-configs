@@ -1,0 +1,30 @@
+Dockerfile
+.dockerignore
+node_modules
+README*.md
+.git
+.next
+cloudbuild
+.gitlab-ci.yml
+
+# 開発環境でのみ使用するファイル・ディレクトリ
+.vscode
+.husky
+.editorconfig
+jest.config.*
+jest.setup.*
+.eslintrc.*
+.prettierrc.*
+.stylelintrc.*
+.secretlintrc.*
+.secretlintignore
+
+# テストファイル
+*/tests
+# mocksをテスト以外でも使用している
+# 今後、ignoreの対象をmocks全体に変更する
+mocks/next-auth.ts
+mocks/userCredential.ts
+
+github
+gitlab
