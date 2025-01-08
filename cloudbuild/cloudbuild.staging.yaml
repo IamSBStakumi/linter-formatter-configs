@@ -1,0 +1,53 @@
+steps:
+  # Docker Build
+  - name: "gcr.io/cloud-builders/docker"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        echo -n ${_FIREBASE_ADMIN} | base64 -d > firebaseAdmin.json
+        echo -n ${_ENV_VAR} | base64 -d > .env
+        docker build . --tag ${_DESTINATION}:latest --cache-from ${_DESTINATION}:latest
+
+  # Docker push to Google Artifact Registry
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "${_DESTINATION}:latest"]
+
+  # Deploy to Cloud Run
+  - name: google/cloud-sdk
+    args:
+      [
+        "gcloud",
+        "run",
+        "deploy",
+        "${_CLOUD_RUN_NAME}",
+        "--image=${_DESTINATION}:latest",
+        "--region",
+        "${_GCP_REGION}",
+        "--platform",
+        "managed",
+        "--allow-unauthenticated",
+        "--ingress",
+        "all",
+        "--port",
+        "3000",
+        "--max-instances",
+        "1",
+      ]
+      # "--network",
+      # "staging-vpc",
+      # "--subnet",
+      # "staging-subnet",
+      # "--vpc-egress",
+      # "all-traffic",
+
+images:
+  - ${_DESTINATION}
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+substitutions:
+  _CLOUD_RUN_NAME: auth-test
+  _GCP_REGION: asia-northeast2
+  _DESTINATION: asia-northeast2-docker.pkg.dev/firebase-auth-and-next-auth/staging-repo/ui

@@ -1,0 +1,15 @@
+stages:
+  - deploy
+
+deploy-staging:
+  stage: deploy
+  image: google/cloud-sdk:stable
+  before_script:
+    - echo -n $SERVICE_ACCOUNT | base64 -d > service-account.json
+  script:
+    - gcloud auth activate-service-account --key-file service-account.json
+    - rm -f ./service-account.json
+    # - gcloud config set project newhappitec
+    - gcloud config set project firebase-auth-and-next-auth
+    - gcloud auth configure-docker
+    - gcloud builds submit . --substitutions=_FIREBASE_ADMIN=$STAGING_FIREBASE_ADMIN,_ENV_VAR=$STAGING_ENV --config ./cloudbuild/cloudbuild.staging.yaml
