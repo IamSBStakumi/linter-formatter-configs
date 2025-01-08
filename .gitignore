@@ -41,3 +41,7 @@ next-env.d.ts
 
 # Service Account Key
 firebaseAdmin.json
+
+# git dir
+github
+gitlab
